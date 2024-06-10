@@ -26,6 +26,8 @@ It's also possible to point at LMStudio (which i previously did) and use those m
 The quality of the output relies on the quality of the audio. If you have a good audio file, it should be fine. But if you have poor audio, wisper will probably output garbage.
 Summarization can be flaky and relies on the quality of the model used. LLAMA3-8B or Mistral-7B are pretty good and lightweight. LLAMA3-70B is pretty good, but i have to scrape by on the q4 version on a RX6900XT (16GB), which is slow but gives decent result.
 
+Peoples names are generally a problem for the models. However the more capable models seem to do a better job.
+
 # Example output
 
 [Supertrends example](example-supertrend.md)
