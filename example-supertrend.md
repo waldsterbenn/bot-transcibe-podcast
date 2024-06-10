@@ -4,8 +4,6 @@
 
 # Summary
 
-Here is the report structured according to your request:
-
 **Participants**
 
 1. Liselotte Lyngsø - Entrepreneur, Author
