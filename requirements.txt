@@ -1,0 +1,13 @@
+torch
+transformers
+accelerate 
+optimum
+requests
+scipy
+optimum
+eager 
+optimum[amd]
+nltk 
+llama-index-core
+llama-index-llms-ollama
+llmlingua

@@ -1,0 +1,9 @@
+#Ignored by git
+
+.conda-bot-transcribe/
+.vscode/
+
+summaries/
+podcasts/
+
+app.log
