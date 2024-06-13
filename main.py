@@ -16,9 +16,9 @@ log.info("*** Starting transcription pipeline ***")
 log.info("***************************************")
 
 # Paths to the Python scripts
-script1_path = 'find_mp3s.py'
-script2_path = 'multi_transcribe.py'
-script3_path = 'audio_report_generator.py'
+script_findmp3 = 'find_mp3s.py'
+script_transcibe = 'multi_transcribe.py'
+script_audiogenerator = 'audio_report_generator.py'
 
 podcast_feeds = {
     # Supertrends
@@ -44,7 +44,7 @@ podcast_feeds = {
 }
 
 # String parameter to pass to the first script
-param_to_first_script = podcast_feeds["1"]
+param_to_first_script = podcast_feeds["4"]
 
 
 def run_script(script_path, args=None):
@@ -64,10 +64,10 @@ def run_script(script_path, args=None):
 
 # Run the first script with the string parameter
 if os.path.exists("podcast_data.json") == False:
-    run_script(script1_path, [param_to_first_script])
+    run_script(script_findmp3, [param_to_first_script])
 
 # Run the second script without any parameters
-run_script(script2_path)
+run_script(script_transcibe)
 
 # run_script(script3_path)
 

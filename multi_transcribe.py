@@ -45,6 +45,7 @@ class SupportedModels(Enum):
     Phi3_medium = 11
 
 
+# Før man kan bruge andre modeller skal man hente dem via "ollama pull <modelname>"
 llm_models_config = {
     SupportedModels.Mistral_7B_v1:  LlmModelConfig("mistral7b", 8192),
     SupportedModels.Mistral_7B_v2:  LlmModelConfig("mistral7b", 32000),
@@ -60,7 +61,7 @@ llm_models_config = {
     SupportedModels.Phi3_medium:  LlmModelConfig("phi3:14b", 32000),
 }
 
-current_llm_model_key = SupportedModels.Llama3_gradient
+current_llm_model_key = SupportedModels.Llama3_8b
 
 delete_merged_summaries = True
 language = "danish"
@@ -72,14 +73,12 @@ llm_context_window_size = llm_models_config[current_llm_model_key].context_windo
     prompt_token_length
 
 # Maximum tokens for a single chunk
-# chunker_max_tokens = int(llm_context_window_size / 4)
 chunker_overlap = 100  # Tokens to overlap between chunks to ensure continuity
 
 logger.info(
     f"Starting summarizer. LLM: {llm_models_config[current_llm_model_key].name}. Context Window: {llm_models_config[current_llm_model_key].context_window}. Temperature: {summarizer_temp}")
 
 # Initialize the tokenizer
-# tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-Instruct-v0.2")
 tokenizer = AutoTokenizer.from_pretrained(
     'distilbert-base-uncased-finetuned-sst-2-english')
 
@@ -113,13 +112,6 @@ podcast_data_collection = [
     #    "categorys": "Science",
     #    "podcasttitle": "Supertrends"
     # },
-    # "https://api.dr.dk/podcasts/v1/assets/urn:dr:podcast:item:11032411011/312bc5e3ff8870e58217597ca8630c292f7996405c2ac23dd4e296c0711996e8.mp3",
-    # "https://api.dr.dk/podcasts/v1/assets/urn:dr:podcast:item:16122011701/5a0edb9fac3694c0ab176113039b2df8bac47f4f1417f04985f7eb75e089832d.mp3",
-    # "https://api.dr.dk/podcasts/v1/assets/urn:dr:podcast:item:16122011702/bf2382684e39efea2332bb19c5ae4554834c9bdc187cbcdbc9dc54e856ce4d6f.mp3",
-    # "https://api.dr.dk/podcasts/v1/assets/urn:dr:podcast:item:16122011703/daf809adb64a948a280e64049c67b3d111fe634c781aca86b60cc2965aa2eaeb.mp3",
-    # "https://api.dr.dk/podcasts/v1/assets/urn:dr:podcast:item:16122011704/cfca2952896d30c66355c57f02a95f2293adf229332629c4bb9b0530618e3144.mp3",
-    # "https://api.dr.dk/podcasts/v1/assets/urn:dr:podcast:item:16122011705/9a3f1a4c93a985779b62eb7b7d6b1b5b2e773272c12fd01ec1754989e9d1255f.mp3",
-    # "https://api.dr.dk/podcasts/v1/assets/urn:dr:podcast:item:11802410151/7e75ae392048ed9aaf13bb1f7032b38f77c3e7dae5bd22554127dcb47e814985.mp3",
 ]
 
 if (len(podcast_data_collection) == 0 and os.path.exists("podcast_data.json")):
@@ -321,7 +313,7 @@ def strip_chars(text_array):
 # Point to the local server
 ollama_client = Ollama(
     model=llm_models_config[current_llm_model_key].name,
-    request_timeout=2000.0,
+    request_timeout=15000.0,
     temperature=summarizer_temp,
     stream=False,
     context_window=llm_models_config[current_llm_model_key].context_window
